@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | MyApp</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script th:src="@{/webjars/htmx.org/2.0.6/dist/htmx.js}" defer></script>
+    <script th:src="@{/webjars/htmx.org/2.0.6/dist/ext/json-enc.js}" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">Welcome Back</h2>
+    <form
+            hx-post="/login"
+            hx-ext="json-enc"
+            hx-headers='{"Content-Type": "application/json"}'
+            hx-target="#login-response"
+            hx-swap="innerHTML"
+            class="space-y-4"
+    >
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" id="username" name="username" required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" name="password" required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+            Login
+        </button>
+    </form>
+
+    <div id="login-response" class="mt-4 text-center text-sm text-red-600"></div>
+
+    <p class="text-center mt-6 text-gray-500 text-sm">
+        Don't have an account? <a href="/register" class="text-blue-600 hover:underline">Sign up</a>
+    </p>
+</div>
+
+</body>
+</html>

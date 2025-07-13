@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Full Stack</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script th:src="@{/webjars/htmx.org/2.0.6/dist/htmx.js}" defer></script>
+    <script th:src="@{/webjars/htmx.org/2.0.6/dist/ext/json-enc.js}" defer></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal tracking-normal">
+
+<!-- Header -->
+<header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+        <h1 hx-get="/" hx-trigger="click" class="text-2xl font-bold text-blue-600 hover:text-blue-500 cursor-pointer">MyApp</h1>
+        <nav class="space-x-4">
+            <a href="#features" class="text-gray-700 hover:text-blue-500">Features</a>
+            <a href="#about" class="text-gray-700 hover:text-blue-500">About</a>
+            <a href="#contact" class="text-gray-700 hover:text-blue-500">Contact</a>
+            <a href="/login" class="text-gray-700 hover:text-blue-500">Login</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="bg-blue-50">
+    <div class="max-w-7xl mx-auto px-4 py-20 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-blue-700">Build modern apps with Spring Boot & HTMX</h2>
+        <p class="mt-4 text-lg text-blue-600">Fast. Reactive. Dynamic. Without the JavaScript overload.</p>
+        <a href="#contact"
+           class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+            Get Started
+        </a>
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+        <div class="p-6 bg-blue-100 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-blue-700 mb-2">Live Updates</h3>
+            <p class="text-gray-700">With HTMX, fetch and replace content without full page reloads.</p>
+        </div>
+        <div class="p-6 bg-blue-100 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-blue-700 mb-2">Minimal JS</h3>
+            <p class="text-gray-700">Replace complex JS frameworks with simple HTML attributes.</p>
+        </div>
+        <div class="p-6 bg-blue-100 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-blue-700 mb-2">Spring Boot Friendly</h3>
+            <p class="text-gray-700">Integrates easily with Thymeleaf, REST endpoints, and Spring controllers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-blue-700 mb-4">About This Project</h2>
+        <p class="text-gray-700 text-lg">
+            This is a live example of a reactive, server-driven UI powered by HTMX, styled with Tailwind CSS 3.1.4,
+            and rendered through Thymeleaf templates.
+        </p>
+    </div>
+</section>
+
+<!-- Contact Form (HTMX-powered POST) -->
+<section id="contact" class="py-20 bg-white">
+    <div class="max-w-xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">Contact Us</h2>
+        <form hx-post="/contact" hx-ext="json-enc" hx-headers='{"Content-Type": "application/json"}' hx-target="#form-response" hx-swap="outerHTML" class="space-y-4">
+            <input type="text" name="name" placeholder="Your Name"
+                   class="w-full p-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input type="email" name="email" placeholder="Email"
+                   class="w-full p-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <textarea name="message" rows="4" placeholder="Message"
+                      class="w-full p-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                Send Message
+            </button>
+        </form>
+        <div id="form-response" class="mt-4 text-center text-green-600 font-semibold hidden"></div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-100 py-6 text-center text-gray-600 text-sm">
+    © 2025 MyApp. All rights reserved.
+</footer>
+</body>
+</html>
