@@ -40,18 +40,25 @@ public class AppController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> doLogin(@RequestBody UserModel user) {
+    public ResponseEntity<?> doLogin(@RequestBody UserModel user) {
         log.info("Tyring login with user ==> {}", user.getUsername());
-        Authentication authentication = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
 
-        String jwt = jwtUtil.generateToken(user.getUsername());
-
-        String script =  "<script>localStorage.setItem('jwt','" + jwt + "'); window.location='/dashboard';</script>";
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, "text/html")
-                .body(script);
+            String jwt = jwtUtil.generateToken(user.getUsername());
+            return ResponseEntity.ok(Map.of("token", jwt));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid username or password");
+        }
+        // window.location='/dashboard';
+//        String script =  "<script>localStorage.setItem('jwt','" + jwt + "');window.location = '/dashboard';</script>";
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_TYPE, "text/html")
+//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
+//                .header("HX-Redirect", "/dashboard")
+//                .body(script);
     }
 
     @GetMapping("/register")

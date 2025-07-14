@@ -28,7 +28,7 @@ class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         authrizeHttp -> {
                             authrizeHttp.requestMatchers("/").permitAll();
@@ -37,17 +37,19 @@ class SecurityConfig {
                             authrizeHttp.requestMatchers("/logout").permitAll();
                             authrizeHttp.requestMatchers("/webjars/**").permitAll();
                             authrizeHttp.requestMatchers("/h2-console/**").permitAll();
+                            authrizeHttp.requestMatchers("/css/**").permitAll();
+                            authrizeHttp.requestMatchers("/js/**").permitAll();
                             authrizeHttp.anyRequest().authenticated();
                         }
                 )
                 .formLogin(form -> form.disable()) // 🔥 disable default form login
                 .httpBasic(httpBasic -> httpBasic.disable())
-//                .exceptionHandling(ex -> ex
-//                        .authenticationEntryPoint((request, response, authException) -> {
-//                            // ✅ Redirect to login page if no token or unauthorized
-//                            response.sendRedirect("/login");
-//                        })
-//                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            // ✅ Redirect to login page if no token or unauthorized
+                            response.sendRedirect("/login");
+                        })
+                )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/h2-console/**")
                 )
